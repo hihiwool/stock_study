@@ -1,0 +1,7 @@
+name = "stock-study-api"
+main = "workers/stock-study-api.js"
+compatibility_date = "2026-05-24"
+
+[observability]
+enabled = true
+
