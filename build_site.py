@@ -54,17 +54,35 @@ PAGES = [
         market="나스닥", status="핵심 후보",
     ),
     SourcePage(
+        "02_기업분석/신세계.md", "신세계", "company",
+        summary="백화점 기존점 성장률과 면세점 회복 지속성 확인",
+        ticker="004170", tv_symbol="KRX:004170",
+        market="코스피", status="관찰",
+    ),
+    SourcePage(
+        "02_기업분석/LS에코에너지.md", "LS에코에너지", "company",
+        summary="AI 데이터센터 전력 케이블 공급과 초고압 케이블 성장",
+        ticker="229640", tv_symbol="KRX:229640",
+        market="코스피", status="후보",
+    ),
+    SourcePage(
         "02_기업분석/블룸에너지.md", "블룸에너지", "company",
         summary="AI 데이터센터 전력 수요 + 분산형 연료전지, Nebius 파트너십",
         ticker="BE", tv_symbol="NYSE:BE",
         market="뉴욕", status="성장 후보",
+    ),
+    SourcePage(
+        "02_기업분석/울프스피드.md", "울프스피드", "company",
+        summary="Chapter 11 이후 재무 부담은 줄었지만 여전히 고위험 특수상황",
+        ticker="WOLF", tv_symbol="NYSE:WOLF",
+        market="뉴욕", status="고위험 관찰",
     ),
     # 데일리
     SourcePage(
         "01_데일리_숙제/Day 1 - 관심종목 등록 및 삼성전기 분석.md",
         "Day 1 · 관심종목 등록 + 삼성전기 분석", "daily",
         summary="AI 수혜주라는 막연한 표현을 검증 가능한 가설로 바꾸는 첫 연습",
-        day_no=1, tags=("삼성전기",),
+        day_no=1, tags=("신세계", "삼성전기", "LS에코에너지", "알파벳", "울프스피드", "블룸에너지"),
     ),
     SourcePage(
         "01_데일리_숙제/Day 2 - 알파벳 분석.md",
@@ -113,7 +131,10 @@ SLUG_BY_SOURCE = {
     "02_기업분석/삼성전기.md": "company-samsung-electro-mechanics",
     "02_기업분석/알파벳.md": "company-alphabet",
     "02_기업분석/엔비디아.md": "company-nvidia",
+    "02_기업분석/신세계.md": "company-shinsegae",
+    "02_기업분석/LS에코에너지.md": "company-ls-eco-energy",
     "02_기업분석/블룸에너지.md": "company-bloom-energy",
+    "02_기업분석/울프스피드.md": "company-wolfspeed",
     "01_데일리_숙제/Day 1 - 관심종목 등록 및 삼성전기 분석.md": "daily-day-1",
     "01_데일리_숙제/Day 2 - 알파벳 분석.md": "daily-day-2",
     "01_데일리_숙제/Day 3 - 엔비디아 실적 프리뷰.md": "daily-day-3",
@@ -603,7 +624,13 @@ def build_index() -> str:
     daily_html = "\n".join(daily_card(p) for p in daily_pages)
     latest_date = next((daily_date(p) for p in daily_pages if daily_date(p)), "")
 
-    company_groups = [("핵심 후보", "core"), ("성장 후보", "growth")]
+    company_groups = [
+        ("핵심 후보", "core"),
+        ("성장 후보", "growth"),
+        ("후보", "candidate"),
+        ("관찰", "watch"),
+        ("고위험 관찰", "risk"),
+    ]
     company_html_parts = []
     for status, _ in company_groups:
         rows = [company_row(p) for p in company_pages if p.status == status]
