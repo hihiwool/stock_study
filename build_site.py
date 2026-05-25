@@ -96,6 +96,12 @@ PAGES = [
         summary="AI 데이터센터 전력 수요 → 블룸에너지 수혜 가설과 리스크 정리",
         day_no=6, tags=("블룸에너지",),
     ),
+    SourcePage(
+        "01_데일리_숙제/Day 7 - LS에코에너지 확인 데이터.md",
+        "Day 7 · LS에코에너지 확인 데이터", "daily",
+        summary="60MW AI 데이터센터 케이블 공급과 실적·수급·주가 과열 여부 점검",
+        day_no=7, tags=("LS에코에너지",),
+    ),
 ]
 
 SLUG_BY_SOURCE = {
@@ -114,6 +120,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 4 - 엔비디아 실적 발표 확인.md": "daily-day-4",
     "01_데일리_숙제/Day 5 - 엔비디아 실적 후 복기.md": "daily-day-5",
     "01_데일리_숙제/Day 6 - 블룸에너지 투자 아이디어 정리.md": "daily-day-6",
+    "01_데일리_숙제/Day 7 - LS에코에너지 확인 데이터.md": "daily-day-7",
 }
 
 
