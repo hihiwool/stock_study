@@ -55,7 +55,7 @@ PAGES = [
     ),
     SourcePage(
         "02_기업분석/신세계.md", "신세계", "company",
-        summary="백화점 기존점 성장률과 면세점 회복 지속성 확인",
+        summary="백화점 기존점 성장률, 리뉴얼 효과, 면세점 흑자 전환 지속성 확인",
         ticker="004170", tv_symbol="KRX:004170",
         market="코스피", status="관찰",
     ),
@@ -120,6 +120,12 @@ PAGES = [
         summary="60MW AI 데이터센터 케이블 공급과 실적·수급·주가 과열 여부 점검",
         day_no=7, tags=("LS에코에너지",),
     ),
+    SourcePage(
+        "01_데일리_숙제/Day 8 - 신세계 투자 아이디어 점검.md",
+        "Day 8 · 신세계 투자 아이디어 점검", "daily",
+        summary="코스피 상승 수혜 가설을 백화점·면세점 실적 개선 데이터로 재검증",
+        day_no=8, tags=("신세계",),
+    ),
 ]
 
 SLUG_BY_SOURCE = {
@@ -142,6 +148,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 5 - 엔비디아 실적 후 복기.md": "daily-day-5",
     "01_데일리_숙제/Day 6 - 블룸에너지 투자 아이디어 정리.md": "daily-day-6",
     "01_데일리_숙제/Day 7 - LS에코에너지 확인 데이터.md": "daily-day-7",
+    "01_데일리_숙제/Day 8 - 신세계 투자 아이디어 점검.md": "daily-day-8",
 }
 
 
