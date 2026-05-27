@@ -73,7 +73,7 @@ PAGES = [
     ),
     SourcePage(
         "02_기업분석/울프스피드.md", "울프스피드", "company",
-        summary="Chapter 11 이후 재무 부담은 줄었지만 여전히 고위험 특수상황",
+        summary="Chapter 11 이후 부채는 줄었지만 기존 주주 희석·마진 회복 리스크 큼",
         ticker="WOLF", tv_symbol="NYSE:WOLF",
         market="뉴욕", status="고위험 관찰",
     ),
@@ -126,6 +126,12 @@ PAGES = [
         summary="코스피 상승 수혜 가설을 백화점·면세점 실적 개선 데이터로 재검증",
         day_no=8, tags=("신세계",),
     ),
+    SourcePage(
+        "01_데일리_숙제/Day 9 - 울프스피드 투자 아이디어 점검.md",
+        "Day 9 · 울프스피드 투자 아이디어 점검", "daily",
+        summary="AI 전력 효율 수혜 가설보다 구조조정·주주 희석·마진 회복 리스크를 우선 점검",
+        day_no=9, tags=("울프스피드",),
+    ),
 ]
 
 SLUG_BY_SOURCE = {
@@ -149,6 +155,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 6 - 블룸에너지 투자 아이디어 정리.md": "daily-day-6",
     "01_데일리_숙제/Day 7 - LS에코에너지 확인 데이터.md": "daily-day-7",
     "01_데일리_숙제/Day 8 - 신세계 투자 아이디어 점검.md": "daily-day-8",
+    "01_데일리_숙제/Day 9 - 울프스피드 투자 아이디어 점검.md": "daily-day-9",
 }
 
 
