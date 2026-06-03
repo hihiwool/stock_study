@@ -144,6 +144,12 @@ PAGES = [
         summary="Google Cloud 성장과 AI Capex 부담, 주가 눌림 구간을 함께 점검",
         day_no=11, tags=("알파벳",),
     ),
+    SourcePage(
+        "01_데일리_숙제/Day 12 - 엔비디아 2차 체크.md",
+        "Day 12 · 엔비디아 2차 체크", "daily",
+        summary="Compute·Networking 성장과 중국 리스크, 실적 이후 주가 반응을 점검",
+        day_no=12, tags=("엔비디아",),
+    ),
 ]
 
 SLUG_BY_SOURCE = {
@@ -170,6 +176,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 9 - 울프스피드 투자 아이디어 점검.md": "daily-day-9",
     "01_데일리_숙제/Day 10 - 삼성전기 2차 체크.md": "daily-day-10",
     "01_데일리_숙제/Day 11 - 알파벳 2차 체크.md": "daily-day-11",
+    "01_데일리_숙제/Day 12 - 엔비디아 2차 체크.md": "daily-day-12",
 }
 
 
