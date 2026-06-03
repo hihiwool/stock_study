@@ -132,6 +132,12 @@ PAGES = [
         summary="AI 전력 효율 수혜 가설보다 구조조정·주주 희석·마진 회복 리스크를 우선 점검",
         day_no=9, tags=("울프스피드",),
     ),
+    SourcePage(
+        "01_데일리_숙제/Day 11 - 알파벳 2차 체크.md",
+        "Day 11 · 알파벳 2차 체크", "daily",
+        summary="Google Cloud 성장과 AI Capex 부담, 주가 눌림 구간을 함께 점검",
+        day_no=11, tags=("알파벳",),
+    ),
 ]
 
 SLUG_BY_SOURCE = {
@@ -156,6 +162,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 7 - LS에코에너지 확인 데이터.md": "daily-day-7",
     "01_데일리_숙제/Day 8 - 신세계 투자 아이디어 점검.md": "daily-day-8",
     "01_데일리_숙제/Day 9 - 울프스피드 투자 아이디어 점검.md": "daily-day-9",
+    "01_데일리_숙제/Day 11 - 알파벳 2차 체크.md": "daily-day-11",
 }
 
 
