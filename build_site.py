@@ -133,6 +133,12 @@ PAGES = [
         day_no=9, tags=("울프스피드",),
     ),
     SourcePage(
+        "01_데일리_숙제/Day 10 - 삼성전기 2차 체크.md",
+        "Day 10 · 삼성전기 2차 체크", "daily",
+        summary="AI 부품 수혜 가설과 외국인·기관 수급, 급등 이후 가격 부담을 점검",
+        day_no=10, tags=("삼성전기",),
+    ),
+    SourcePage(
         "01_데일리_숙제/Day 11 - 알파벳 2차 체크.md",
         "Day 11 · 알파벳 2차 체크", "daily",
         summary="Google Cloud 성장과 AI Capex 부담, 주가 눌림 구간을 함께 점검",
@@ -162,6 +168,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 7 - LS에코에너지 확인 데이터.md": "daily-day-7",
     "01_데일리_숙제/Day 8 - 신세계 투자 아이디어 점검.md": "daily-day-8",
     "01_데일리_숙제/Day 9 - 울프스피드 투자 아이디어 점검.md": "daily-day-9",
+    "01_데일리_숙제/Day 10 - 삼성전기 2차 체크.md": "daily-day-10",
     "01_데일리_숙제/Day 11 - 알파벳 2차 체크.md": "daily-day-11",
 }
 
