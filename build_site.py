@@ -150,6 +150,12 @@ PAGES = [
         summary="Compute·Networking 성장과 중국 리스크, 실적 이후 주가 반응을 점검",
         day_no=12, tags=("엔비디아",),
     ),
+    SourcePage(
+        "01_데일리_숙제/Day 13 - 코스피 3종 비교 정리.md",
+        "Day 13 · 코스피 3종 비교 정리", "daily",
+        summary="삼성전기·신세계·LS에코에너지를 비교해 매수 우선순위와 대기 조건을 정리",
+        day_no=13, tags=("삼성전기", "신세계", "LS에코에너지"),
+    ),
 ]
 
 SLUG_BY_SOURCE = {
@@ -177,6 +183,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 10 - 삼성전기 2차 체크.md": "daily-day-10",
     "01_데일리_숙제/Day 11 - 알파벳 2차 체크.md": "daily-day-11",
     "01_데일리_숙제/Day 12 - 엔비디아 2차 체크.md": "daily-day-12",
+    "01_데일리_숙제/Day 13 - 코스피 3종 비교 정리.md": "daily-day-13",
 }
 
 
