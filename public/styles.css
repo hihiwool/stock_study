@@ -55,6 +55,15 @@ main{width:min(1320px,100%);margin:0 auto}
 .market-nasdaq{background:#1f3a5f;color:#79c0ff}
 .market-nyse{background:#2a2347;color:#d2a8ff}
 
+/* ---------- Daily feed filter ---------- */
+.feed-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.filter-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:border-color .15s ease,color .15s ease}
+.filter-chip:hover{border-color:var(--accent);color:var(--text)}
+.filter-chip.is-active{border-color:var(--accent);background:var(--accent-soft);color:#79c0ff}
+.filter-count{display:inline-flex;align-items:center;padding:0 6px;border-radius:999px;background:var(--panel-2);font-size:10.5px;color:var(--muted)}
+.filter-chip.is-active .filter-count{background:rgba(121,192,255,.15);color:#79c0ff}
+.daily-card.is-hidden{display:none}
+
 /* ---------- Home grid: feed + companies ---------- */
 .home-grid{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(280px,1fr);gap:18px;align-items:flex-start}
 .feed{min-width:0}
@@ -140,6 +149,20 @@ code{padding:2px 6px;border-radius:4px;background:var(--bg);border:1px solid var
 .related-date{margin-left:auto;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
 .related-company{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border-soft);border-radius:8px;background:var(--panel-2);color:var(--text)}
 .related-company:hover{border-color:var(--accent);text-decoration:none}
+
+/* ---------- Daily prev/next nav ---------- */
+.daily-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.daily-nav__link{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--panel);color:var(--text);min-width:0;transition:border-color .15s ease}
+.daily-nav__link:hover{border-color:var(--accent);text-decoration:none}
+.daily-nav__next{text-align:right;align-items:flex-end}
+.daily-nav__dir{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.04em}
+.daily-nav__title{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.daily-nav__spacer{visibility:hidden}
+
+/* ---------- Footer ---------- */
+.site-footer{width:min(1320px,100%);margin:30px auto 8px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted-2);font-size:12px}
+.site-footer a{color:var(--muted);font-weight:600}
+.site-footer a:hover{color:var(--accent)}
 
 /* ---------- Responsive ---------- */
 @media(max-width:1024px){

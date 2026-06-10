@@ -4,6 +4,7 @@ import html
 import re
 import shutil
 from dataclasses import dataclass, field
+from datetime import date
 from pathlib import Path
 from urllib.parse import quote
 
@@ -542,8 +543,9 @@ def daily_card(page: SourcePage) -> str:
         f'<span class="chip">{html.escape(t)}</span>' for t in page.tags
     )
     date_html = f'<time class="daily-date">{html.escape(date)}</time>' if date else ""
+    tags_attr = html.escape(",".join(page.tags))
     return (
-        f'<a class="daily-card" href="./articles/{slug}.html">'
+        f'<a class="daily-card" href="./articles/{slug}.html" data-tags="{tags_attr}">'
         f'<div class="daily-card__meta">'
         f'<span class="day-no">Day {page.day_no}</span>'
         f'{date_html}'
@@ -612,8 +614,24 @@ def tv_widget(page: SourcePage) -> str:
 
 # ---------------- 페이지 셸 ----------------
 
-def page_shell(title: str, body: str, current: str = "") -> str:
+SITE_URL = "https://stock.howlnode.com"
+DEFAULT_DESCRIPTION = "데일리 숙제와 기업분석으로 쌓아가는 주식 스터디 기록"
+
+FAVICON_SVG = (
+    "data:image/svg+xml,"
+    + quote(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
+        '<rect width="32" height="32" rx="7" fill="#161b22"/>'
+        '<path d="M6 21l6-6 4 4 8-9" stroke="#58a6ff" stroke-width="3" '
+        'fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+        "</svg>"
+    )
+)
+
+
+def page_shell(title: str, body: str, current: str = "", description: str = "") -> str:
     prefix = "../" if current == "article" else ""
+    desc = description or DEFAULT_DESCRIPTION
     nav = [
         ("index.html#daily", "데일리"),
         ("index.html#companies", "기업분석"),
@@ -626,7 +644,15 @@ def page_shell(title: str, body: str, current: str = "") -> str:
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d1117">
+    <meta name="description" content="{html.escape(desc)}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="HowlNode Stock">
+    <meta property="og:title" content="{html.escape(title)} | HowlNode Stock">
+    <meta property="og:description" content="{html.escape(desc)}">
+    <meta property="og:url" content="{SITE_URL}/">
     <title>{html.escape(title)} | HowlNode Stock</title>
+    <link rel="icon" href="{FAVICON_SVG}">
     <link rel="stylesheet" href="{prefix}styles.css">
   </head>
   <body>
@@ -638,6 +664,10 @@ def page_shell(title: str, body: str, current: str = "") -> str:
       <nav>{nav_html}</nav>
     </header>
     {body}
+    <footer class="site-footer">
+      <span>HowlNode Stock · 마지막 빌드 {date.today().isoformat()}</span>
+      <a href="https://github.com/hihiwool/stock_study" target="_blank" rel="noopener">GitHub</a>
+    </footer>
   </body>
 </html>
 """
@@ -665,6 +695,23 @@ def build_index() -> str:
     # 데일리 피드 & 기업분석 리스트
     daily_html = "\n".join(daily_card(p) for p in daily_pages)
     latest_date = next((daily_date(p) for p in daily_pages if daily_date(p)), "")
+
+    # 데일리 종목 필터 (다룬 횟수 많은 순)
+    tag_counts: dict[str, int] = {}
+    for p in daily_pages:
+        for t in p.tags:
+            tag_counts[t] = tag_counts.get(t, 0) + 1
+    filter_tags = sorted(tag_counts, key=lambda t: (-tag_counts[t], t))
+    filter_html = (
+        '<div class="feed-filter" id="feed-filter">'
+        '<button class="filter-chip is-active" data-tag="">전체</button>'
+        + "".join(
+            f'<button class="filter-chip" data-tag="{html.escape(t)}">'
+            f'{html.escape(t)}<span class="filter-count">{tag_counts[t]}</span></button>'
+            for t in filter_tags
+        )
+        + "</div>"
+    )
 
     company_groups = [
         ("핵심 후보", "core"),
@@ -701,6 +748,7 @@ def build_index() -> str:
             </div>
             <span class="feed-meta">최신 {html.escape(latest_date) if latest_date else ""} · 총 {len(daily_pages)}개</span>
           </div>
+          {filter_html}
           <div class="feed-list">{daily_html}</div>
         </section>
 
@@ -749,6 +797,24 @@ def build_index() -> str:
         <article class="content-card">{render_markdown(project_md)}</article>
       </section>
     </main>
+    <script>
+    (function () {{
+      var filter = document.getElementById("feed-filter");
+      if (!filter) return;
+      var chips = filter.querySelectorAll(".filter-chip");
+      var cards = document.querySelectorAll(".feed-list .daily-card");
+      filter.addEventListener("click", function (e) {{
+        var chip = e.target.closest(".filter-chip");
+        if (!chip) return;
+        var tag = chip.dataset.tag;
+        chips.forEach(function (c) {{ c.classList.toggle("is-active", c === chip); }});
+        cards.forEach(function (card) {{
+          var tags = (card.dataset.tags || "").split(",");
+          card.classList.toggle("is-hidden", tag !== "" && tags.indexOf(tag) === -1);
+        }});
+      }});
+    }})();
+    </script>
 """
     return page_shell("홈", body)
 
@@ -804,19 +870,44 @@ def related_panel(page: SourcePage) -> str:
     return ""
 
 
+def daily_nav(page: SourcePage) -> str:
+    """데일리 글 하단 이전/다음 Day 내비게이션"""
+    if page.group != "daily":
+        return ""
+    dailies = sorted((p for p in PAGES if p.group == "daily"), key=lambda p: p.day_no)
+    idx = next(i for i, p in enumerate(dailies) if p.day_no == page.day_no)
+    prev_p = dailies[idx - 1] if idx > 0 else None
+    next_p = dailies[idx + 1] if idx + 1 < len(dailies) else None
+
+    def link(p: SourcePage, cls: str, arrow_pre: str, arrow_post: str) -> str:
+        label = p.title.split(" · ", 1)[-1]
+        return (
+            f'<a class="daily-nav__link {cls}" href="./{slug_for(p.source)}.html">'
+            f'<span class="daily-nav__dir">{arrow_pre}Day {p.day_no}{arrow_post}</span>'
+            f'<span class="daily-nav__title">{html.escape(label)}</span>'
+            f'</a>'
+        )
+
+    prev_html = link(prev_p, "daily-nav__prev", "← ", "") if prev_p else '<span class="daily-nav__spacer"></span>'
+    next_html = link(next_p, "daily-nav__next", "", " →") if next_p else '<span class="daily-nav__spacer"></span>'
+    return f'<nav class="daily-nav">{prev_html}{next_html}</nav>'
+
+
 def build_article(page: SourcePage) -> str:
     content = render_markdown(read_source(page), link_prefix="./")
     widget = tv_widget(page)
     related = related_panel(page)
+    nav = daily_nav(page)
     body = f"""
     <main class="article-layout">
       <a class="back-link" href="../index.html">← 홈으로</a>
       {widget}
       <article class="article-body">{content}</article>
       {related}
+      {nav}
     </main>
 """
-    return page_shell(page.title, body, current="article")
+    return page_shell(page.title, body, current="article", description=page.summary)
 
 
 # ---------------- CSS ----------------
@@ -878,6 +969,15 @@ main{width:min(1320px,100%);margin:0 auto}
 .market-kospi{background:#1c3a1c;color:#7ee787}
 .market-nasdaq{background:#1f3a5f;color:#79c0ff}
 .market-nyse{background:#2a2347;color:#d2a8ff}
+
+/* ---------- Daily feed filter ---------- */
+.feed-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.filter-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:border-color .15s ease,color .15s ease}
+.filter-chip:hover{border-color:var(--accent);color:var(--text)}
+.filter-chip.is-active{border-color:var(--accent);background:var(--accent-soft);color:#79c0ff}
+.filter-count{display:inline-flex;align-items:center;padding:0 6px;border-radius:999px;background:var(--panel-2);font-size:10.5px;color:var(--muted)}
+.filter-chip.is-active .filter-count{background:rgba(121,192,255,.15);color:#79c0ff}
+.daily-card.is-hidden{display:none}
 
 /* ---------- Home grid: feed + companies ---------- */
 .home-grid{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(280px,1fr);gap:18px;align-items:flex-start}
@@ -964,6 +1064,20 @@ code{padding:2px 6px;border-radius:4px;background:var(--bg);border:1px solid var
 .related-date{margin-left:auto;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
 .related-company{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border-soft);border-radius:8px;background:var(--panel-2);color:var(--text)}
 .related-company:hover{border-color:var(--accent);text-decoration:none}
+
+/* ---------- Daily prev/next nav ---------- */
+.daily-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.daily-nav__link{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--panel);color:var(--text);min-width:0;transition:border-color .15s ease}
+.daily-nav__link:hover{border-color:var(--accent);text-decoration:none}
+.daily-nav__next{text-align:right;align-items:flex-end}
+.daily-nav__dir{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.04em}
+.daily-nav__title{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.daily-nav__spacer{visibility:hidden}
+
+/* ---------- Footer ---------- */
+.site-footer{width:min(1320px,100%);margin:30px auto 8px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted-2);font-size:12px}
+.site-footer a{color:var(--muted);font-weight:600}
+.site-footer a:hover{color:var(--accent)}
 
 /* ---------- Responsive ---------- */
 @media(max-width:1024px){
