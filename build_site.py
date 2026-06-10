@@ -62,9 +62,9 @@ PAGES = [
     ),
     SourcePage(
         "02_기업분석/LS에코에너지.md", "LS에코에너지", "company",
-        summary="AI 데이터센터 전력 케이블 공급과 초고압 케이블 성장",
+        summary="AI 데이터센터 전력 케이블 사례는 있으나 반복 수주·계약 규모 미확인",
         ticker="229640", tv_symbol="KRX:229640",
-        market="코스피", status="후보",
+        market="코스피", status="후순위 관찰",
     ),
     SourcePage(
         "02_기업분석/블룸에너지.md", "블룸에너지", "company",
@@ -76,7 +76,7 @@ PAGES = [
         "02_기업분석/울프스피드.md", "울프스피드", "company",
         summary="Chapter 11 이후 부채는 줄었지만 기존 주주 희석·마진 회복 리스크 큼",
         ticker="WOLF", tv_symbol="NYSE:WOLF",
-        market="뉴욕", status="고위험 관찰",
+        market="뉴욕", status="후순위 관찰",
     ),
     # 데일리
     SourcePage(
@@ -157,6 +157,12 @@ PAGES = [
         summary="삼성전기·신세계·LS에코에너지를 비교해 매수 우선순위와 대기 조건을 정리",
         day_no=13, tags=("삼성전기", "신세계", "LS에코에너지"),
     ),
+    SourcePage(
+        "01_데일리_숙제/Day 14 - 관심종목 업데이트.md",
+        "Day 14 · 관심종목 업데이트", "daily",
+        summary="SK하이닉스·LS ELECTRIC·Micron 신규 추가, 울프스피드·LS에코에너지는 후순위 관찰로 조정",
+        day_no=14, tags=("SK하이닉스", "LS ELECTRIC", "Micron", "울프스피드", "LS에코에너지"),
+    ),
 ]
 
 SLUG_BY_SOURCE = {
@@ -185,6 +191,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 11 - 알파벳 2차 체크.md": "daily-day-11",
     "01_데일리_숙제/Day 12 - 엔비디아 2차 체크.md": "daily-day-12",
     "01_데일리_숙제/Day 13 - 코스피 3종 비교 정리.md": "daily-day-13",
+    "01_데일리_숙제/Day 14 - 관심종목 업데이트.md": "daily-day-14",
 }
 
 
@@ -440,6 +447,8 @@ STATUS_CLASS = {
     "관찰": "watch",
     "고위험 관찰": "risk",
     "후보": "candidate",
+    "신규 추가": "new",
+    "후순위 관찰": "deprioritized",
 }
 
 MARKET_CLASS = {
@@ -716,9 +725,11 @@ def build_index() -> str:
     company_groups = [
         ("핵심 후보", "core"),
         ("성장 후보", "growth"),
+        ("신규 추가", "new"),
         ("후보", "candidate"),
         ("관찰", "watch"),
         ("고위험 관찰", "risk"),
+        ("후순위 관찰", "deprioritized"),
     ]
     company_html_parts = []
     for status, _ in company_groups:
@@ -966,6 +977,8 @@ main{width:min(1320px,100%);margin:0 auto}
 .status-watch{background:#3a2c1c;color:#ffa657}
 .status-risk{background:#3a1c1c;color:#ff7b72}
 .status-candidate{background:#2a2347;color:#d2a8ff}
+.status-new{background:#103138;color:#56d4dd}
+.status-deprioritized{background:#21262d;color:#8b949e}
 .market-kospi{background:#1c3a1c;color:#7ee787}
 .market-nasdaq{background:#1f3a5f;color:#79c0ff}
 .market-nyse{background:#2a2347;color:#d2a8ff}

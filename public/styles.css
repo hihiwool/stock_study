@@ -51,6 +51,8 @@ main{width:min(1320px,100%);margin:0 auto}
 .status-watch{background:#3a2c1c;color:#ffa657}
 .status-risk{background:#3a1c1c;color:#ff7b72}
 .status-candidate{background:#2a2347;color:#d2a8ff}
+.status-new{background:#103138;color:#56d4dd}
+.status-deprioritized{background:#21262d;color:#8b949e}
 .market-kospi{background:#1c3a1c;color:#7ee787}
 .market-nasdaq{background:#1f3a5f;color:#79c0ff}
 .market-nyse{background:#2a2347;color:#d2a8ff}
