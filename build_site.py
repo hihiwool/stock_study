@@ -55,6 +55,12 @@ PAGES = [
         market="나스닥", status="핵심 후보",
     ),
     SourcePage(
+        "02_기업분석/SK하이닉스.md", "SK하이닉스", "company",
+        summary="AI 메모리 핵심 HBM 선도 기업, 1분기 사상 최대 실적, 수급·자리 확인 중",
+        ticker="000660", tv_symbol="KRX:000660",
+        market="코스피", status="핵심 후보",
+    ),
+    SourcePage(
         "02_기업분석/신세계.md", "신세계", "company",
         summary="백화점 기존점 성장률, 리뉴얼 효과, 면세점 흑자 전환 지속성 확인",
         ticker="004170", tv_symbol="KRX:004170",
@@ -163,6 +169,12 @@ PAGES = [
         summary="SK하이닉스·LS ELECTRIC·Micron 신규 추가, 울프스피드·LS에코에너지는 후순위 관찰로 조정",
         day_no=14, tags=("SK하이닉스", "LS ELECTRIC", "Micron", "울프스피드", "LS에코에너지"),
     ),
+    SourcePage(
+        "01_데일리_숙제/Day 15 - SK하이닉스 1차 분석.md",
+        "Day 15 · SK하이닉스 1차 분석", "daily",
+        summary="HBM 가설을 1분기 실적으로 검증하고 핵심 후보로 상향, 다만 수급·자리 확인 전 추격 금지",
+        day_no=15, tags=("SK하이닉스",),
+    ),
 ]
 
 SLUG_BY_SOURCE = {
@@ -178,6 +190,7 @@ SLUG_BY_SOURCE = {
     "02_기업분석/LS에코에너지.md": "company-ls-eco-energy",
     "02_기업분석/블룸에너지.md": "company-bloom-energy",
     "02_기업분석/울프스피드.md": "company-wolfspeed",
+    "02_기업분석/SK하이닉스.md": "company-sk-hynix",
     "01_데일리_숙제/Day 1 - 관심종목 등록 및 삼성전기 분석.md": "daily-day-1",
     "01_데일리_숙제/Day 2 - 알파벳 분석.md": "daily-day-2",
     "01_데일리_숙제/Day 3 - 엔비디아 실적 프리뷰.md": "daily-day-3",
@@ -192,6 +205,7 @@ SLUG_BY_SOURCE = {
     "01_데일리_숙제/Day 12 - 엔비디아 2차 체크.md": "daily-day-12",
     "01_데일리_숙제/Day 13 - 코스피 3종 비교 정리.md": "daily-day-13",
     "01_데일리_숙제/Day 14 - 관심종목 업데이트.md": "daily-day-14",
+    "01_데일리_숙제/Day 15 - SK하이닉스 1차 분석.md": "daily-day-15",
 }
 
 
